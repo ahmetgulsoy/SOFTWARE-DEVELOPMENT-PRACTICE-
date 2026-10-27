@@ -1,0 +1,17 @@
+services:
+  postgres:
+    image: docker.io/library/postgres:18
+    container_name: indigenous-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: indigenous_craft_db
+      POSTGRES_USER: craftuser
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    ports:
+      - "5432:5432"
+    volumes:
+      - indigenous-postgres-data:/var/lib/postgresql
+
+volumes:
+  indigenous-postgres-data:
+    external: true
