@@ -66,20 +66,20 @@ Visitors discover crafts and public profiles. Registered users publish crafts, f
 - **FR-05 Account deletion:** Crafts/comments remain under “Deleted user”; follow relationships are removed; re-registration does not relink old content.
 - **FR-06 Browse:** Guests and registered users browse visible crafts and view details.
 - **FR-07 Public profiles:** Public profiles and follower/following counts are visible; guests cannot see the corresponding account lists.
-- **FR-08 Craft creation:** Registered users create crafts with title, description, optional Backstory, images, tags, categories, properties and optional craft-origin location.
+- **FR-08 Craft creation:** Registered users create crafts with title, description, optional Backstory, images, tags, one or more categories, properties and optional craft-origin location. A Craft may also contain multiple Parts, which can be added and managed separately.
 - **FR-09 Craft editing:** Users edit their own craft entries.
 - **FR-10 Own craft removal:** Users remove their own craft entries through the user-facing flow; this differs from Admin deactivation.
-- **FR-11 Images:** Registered users can upload images from their devices. Each craft supports up to 10 images in JPEG or PNG format. Each image must not exceed 5 MB. The system validates file type and size before accepting an upload.
-- **FR-12 Multiple categories:** A craft can belong to multiple categories.
-- **FR-13 Reusable properties:** A property is reusable across categories; Category and Property have a many-to-many relationship through a link such as CategoryProperty.
-- **FR-14 Common properties:** Common properties apply across categories without explicit association to each category.
-- **FR-15 Dynamic properties:** Category-specific properties appear when at least one associated category is selected. For multiple categories, show the union of applicable properties without duplicates.
-- **FR-16 Admin property management:** Admin creates/manages properties, sets Common or Category-specific scope and associates category-specific properties with one or more categories.
-- **FR-17 Contextual help:** Property values may have short descriptions; where present, the UI provides help such as an info icon or equivalent.
-- **FR-18 Color:** Color is represented by a name and HEX code and displayed with a visual swatch. The platform provides an initial set of basic colors. Users can submit a new color suggestion with a name and HEX code for Admin review. Color groups are not required for Phase 1.
+- **FR-11 Images:** Registered users can upload images from their devices for Crafts. Each Craft supports up to 10 images in JPEG or PNG format. Each image must not exceed 5 MB. The system validates file type and size before accepting an upload.
+- **FR-12 Multiple categories:** A Craft can belong to multiple categories. Its associated categories also determine the category context used to filter properties available for its Parts.
+- **FR-13 Reusable properties:** A property is reusable across categories. Category and Property have a many-to-many relationship through `CATEGORY_ATTRIBUTE`. A category-specific property may be applicable at the Craft level, the Part level, or both.
+- **FR-14 Common properties:** Common properties apply across all categories without explicit association to each category. Common properties shall be defined separately for the Craft and Part levels.
+- **FR-15 Dynamic properties:** Category-specific properties appear according to the selected categories and their applicable level. For multiple selected categories, the system shows the union of applicable properties without duplicates. This applies independently to Craft-level and Part-level properties.
+- **FR-16 Admin property management:** Admin creates/manages properties, sets their scope as Common or Category-specific, defines their applicable level (Craft or Part) when Common, and associates Category-specific properties with one or more categories and their applicable levels.
+- **FR-17 Contextual help:** Property values may have short descriptions; where present, the UI provides help such as an info icon or equivalent for both Craft and Part properties.
+- **FR-18 Color:** Color is represented by a name and HEX code and displayed with a visual swatch. The platform provides an initial set of basic colors. Users can submit a new color suggestion with a name and HEX code for Admin review. Color groups are not required for Phase 1. Color properties may be used at the Craft or Part level according to their applicable configuration.
 - **FR-19 Backstory:** Optional free-text Backstory is separate from Description and captures narrative, cultural context, origin story or making story.
 - **FR-20 Global search:** Case-insensitive search covers title, description, Backstory, tags, category, structured property values and used free-text values.
-- **FR-21 Advanced filters:** Filters are category-aware: show common properties and properties applicable to selected categories.
+- **FR-21 Advanced filters:** FAdvanced filters:** Filters are category-aware: show common properties and properties applicable to selected categories. Property availability shall respect whether the property applies at the Craft or Part level.
 - **FR-22 Filter suggestions:** Suggestions include shared master values and free-text values already used by crafts; “silv” may suggest “Silver”. Do not suggest arbitrary unused values.
 - **FR-23 Filter logic:** Multiple values in one property group use OR; different property groups use AND; empty groups do not restrict results.
 - **FR-24 Follow:** Registered users follow/unfollow other users; self-follow is not allowed.
@@ -87,7 +87,7 @@ Visitors discover crafts and public profiles. Registered users publish crafts, f
 - **FR-26 Comments:** Registered users comment and edit own comments. Users cannot delete comments; Admin can delete comments.
 - **FR-27 Reporting:** Registered users report crafts, comments and users with a reason and optional details.
 - **FR-28 Report visibility:** Reported crafts remain visible during review unless Admin acts. Automatic hiding by report-count threshold is out of scope.
-- **FR-29 Metadata requests:** Users suggest new master-data values or request a property; Admin reviews/manages requests.
+- **FR-29 Metadata requests:** Users suggest new master-data values or request a property; Admin reviews/manages requests. Users may also suggest custom properties created for individual Crafts or Parts for potential inclusion in the shared attribute catalog.
 - **FR-30 Moderation:** Admin can deactivate accounts and crafts. Deactivation retains records. Reactivation may be supported by Admin; if implemented, it restores the item/account subject to normal rules.
 - **FR-31 Deactivated accounts:** Deactivated accounts cannot perform authenticated actions.
 - **FR-32 Deactivated crafts:** Deactivated crafts do not appear in normal public browsing, search or timelines.
@@ -96,6 +96,18 @@ Visitors discover crafts and public profiles. Registered users publish crafts, f
 - **FR-35 Active-user metrics:** An active user is a registered user who successfully logged in during the selected reporting period. Login events must be recorded so distinct users can be counted for daily, weekly and monthly periods. Visitor tracking is not required for Phase 1.
 - **FR-36 Craft origin:** A craft may have an origin location; this is not the user’s current location.
 - **FR-37 Pagination:** Search results and timeline support pagination.
+
+## Craft Part Management
+
+- **FR-38 Part creation:** Registered users can add multiple Parts to their own Crafts. A Craft may contain zero or more Parts.
+- **FR-39 Part information:** Each Part shall have a name/title and may include a description.
+- **FR-40 Part hierarchy:** The system supports only one level of Parts under a Craft. Parts cannot contain nested subparts.
+- **FR-41 Part properties:** Registered users can assign properties to individual Parts using available Global Part Properties and Category-specific Part Properties. Property types, predefined options, multi-selection and custom option entry shall follow the configuration of the associated attribute definition.
+- **FR-42 Custom Part properties:** Users can create custom properties for individual Parts when the required property is not available in the existing attribute catalog. These properties shall initially remain local to the relevant Part and shall not automatically become shared attribute definitions.
+- **FR-43 Custom Part property suggestions:** Users can submit their custom Part properties to Admin for review. Admin can approve or reject these suggestions. Approved suggestions may be added to the shared attribute catalog; rejected suggestions remain local to the relevant Part.
+- **FR-44 Part images:** Registered users can upload images for individual Parts. A Part may have zero or more images; uploading an image is not mandatory.
+- **FR-45 Primary Part image:** Users can designate one image as the primary image of a Part. Each Part can have at most one primary image. A Part without images has no primary image.
+- **FR-46 Part image ordering:** Users can define the display order of images belonging to a Part.
 
 ---
 
