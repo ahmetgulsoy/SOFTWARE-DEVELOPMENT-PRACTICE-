@@ -2,7 +2,7 @@
 
 ## Indigenous Craft Platform
 
-**Version 1.2** | 18 October 2026  
+**Version 1.3** | 15 November 2026  
 **Project:** Indigenous Craft Platform | Phase 1
 
 ---
@@ -11,7 +11,7 @@
 
 | Item | Value |
 | --- | --- |
-| Version | 1.2 — clarified image uploads, color master data, dashboard metrics, reports and master-data removal |
+| Version | 1.3 — clarified image uploads, color master data, dashboard metrics, reports and master-data removal |
 | Status | Requirements baseline draft for review |
 | Target delivery | 8 December 2026 |
 | Development model | Single developer; phased delivery |
